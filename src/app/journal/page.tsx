@@ -1,4 +1,4 @@
-import { InputForm } from "@/components/ui/inputform"; 
+import { InputForm } from "@/components/ui/journalForm"; 
 
 
 export default function Journal() {

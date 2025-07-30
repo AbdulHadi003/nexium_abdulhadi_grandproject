@@ -51,7 +51,7 @@ export function InputForm() {
       setUid(user.uid);
 
       // Check if submitted today
-      const res = await fetch("/api/check-today", {
+      const res = await fetch("/api/journal/check-today", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ id: user.uid }),
@@ -61,7 +61,7 @@ export function InputForm() {
       setSubmittedToday(result.submitted);
 
       // **Replace your existing history fetch code with this:**
-      const histRes = await fetch("/api/history", {
+      const histRes = await fetch("/api/journal/history", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ id: user.uid }),
@@ -89,7 +89,7 @@ export function InputForm() {
     if (!uid) return;
 
     try {
-      const res = await fetch("/api/insert", {
+      const res = await fetch("/api/journal/insert", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ id: uid, writing: data.username }),
@@ -115,7 +115,7 @@ export function InputForm() {
 const handleAnalyze = async (text: string) => {
   setAnalysis("Analyzing...");
   try {
-    const res = await fetch("/api/analyze", {
+    const res = await fetch("/api/journal/analyze", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ text }),
