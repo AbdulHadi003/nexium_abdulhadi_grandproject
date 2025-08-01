@@ -4,7 +4,6 @@ import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import { auth } from '@/lib/firebase';
 
-// Define a type for the alert
 type AlertItem = {
   uid: string;
   created_at: string;
@@ -45,12 +44,12 @@ const NavigateButtonWithBadge = ({ label, route }: Props) => {
 
   return (
     <Link href={`/${route}`}>
-      <div className="relative inline-block mt-4 mr-4">
-        <button className="px-4 py-2 bg-black text-white rounded hover:bg-gray-800 transition">
+      <div className="relative inline-block">
+        <button className="px-4 py-2 rounded-xl bg-gradient-to-br from-indigo-500 to-cyan-500 text-white text-sm font-medium hover:brightness-110 transition-all shadow-sm">
           {label}
         </button>
         {unreadCount > 0 && (
-          <span className="absolute -top-2 -right-2 bg-red-600 text-white text-xs px-1.5 py-0.5 rounded-full">
+          <span className="absolute -top-2 -right-2 bg-red-600 text-white text-xs px-1.5 py-0.5 rounded-full shadow">
             {unreadCount}
           </span>
         )}

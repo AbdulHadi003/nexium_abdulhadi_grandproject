@@ -3,7 +3,7 @@ import { NextResponse } from 'next/server';
 
 export async function POST(req: Request) {
   const { id, writing } = await req.json();
-  const today = new Date().toISOString().split('T')[0];
+const today = new Date().toISOString().replace("T", " ").slice(0, 19);
 
   const { data: existing, error: checkError } = await supabase
     .from('habits')

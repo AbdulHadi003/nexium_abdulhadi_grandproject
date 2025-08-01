@@ -5,7 +5,7 @@ export async function POST(req: Request) {
   const { id, writing } = await req.json();
 
   // Get current date in YYYY-MM-DD format (UTC)
-  const today = new Date().toISOString().split('T')[0];
+const today = new Date().toISOString().replace("T", " ").slice(0, 19);
 
   // Check if journal already exists for today
   const { data: existing, error: checkError } = await supabase
