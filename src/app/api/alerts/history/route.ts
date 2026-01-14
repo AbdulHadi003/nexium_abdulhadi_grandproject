@@ -2,18 +2,39 @@ import supabase from '@/lib/supabase';
 import { NextResponse } from 'next/server';
 
 export async function POST(req: Request) {
-  const { id, date } = await req.json(); // id = UID
+  try {
+    const { id, date } = await req.json(); // date = YYYY-MM-DD
 
-  const { data, error } = await supabase
-    .from('alert')
-    .select('created_at')
-    .eq('uid', id)
-    .eq('created_at', date)
-    .single();
+    if (!id || !date) {
+      return NextResponse.json(
+        { error: 'Missing id or date' },
+        { status: 400 }
+      );
+    }
 
-  if (error && error.code !== 'PGRST116') {
-    return NextResponse.json({ error: error.message }, { status: 500 });
+    const start = `${date}T00:00:00Z`;
+    const end = `${date}T23:59:59.999Z`;
+
+    const { data, error } = await supabase
+      .from('alert')
+      .select('created_at')
+      .eq('uid', id)
+      .gte('created_at', start)
+      .lt('created_at', end)
+      .limit(1);
+
+    if (error) {
+      return NextResponse.json(
+        { error: error.message },
+        { status: 500 }
+      );
+    }
+
+    return NextResponse.json({ exists: data.length > 0 });
+  } catch {
+    return NextResponse.json(
+      { error: 'Invalid request body' },
+      { status: 400 }
+    );
   }
-
-  return NextResponse.json({ exists: !!data });
 }

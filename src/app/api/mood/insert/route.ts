@@ -16,24 +16,10 @@ export async function POST(req: Request) {
 
     const today = new Date().toISOString().replace("T", " ").slice(0, 19); // 'YYYY-MM-DD'
 
-    const { data: maxRow, error: maxErr } = await supabase
-      .from("mood")
-      .select("id")
-      .order("id", { ascending: false })
-      .limit(1)
-      .maybeSingle(); // ✅ handles empty table safely
-
-    if (maxErr) {
-      console.error("Max ID fetch error:", maxErr);
-      return NextResponse.json({ error: maxErr.message }, { status: 500 });
-    }
-
-    const nextId = (maxRow?.id || 0) + 1;
 
     const { error: insertError } = await supabase.from("mood").insert([
       {
         created_at: today,
-        id: nextId,
         mood_,
         uid,
       },
@@ -43,8 +29,23 @@ export async function POST(req: Request) {
       console.error("Insert error:", insertError);
       return NextResponse.json({ error: insertError.message }, { status: 500 });
     }
+       const histRes = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/streak/update`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        uid,
+        category: "mood",
+      }),
+    });
+      if (!histRes.ok) {
+    console.error("Failed to update streak:", await histRes.text());
+  } else {    
+           const hist = await histRes.json();
+        console.log("History from API:", hist);
 
-    return NextResponse.json({ success: true, id: nextId });
+  }
+
+    return NextResponse.json({ success: true});
   } catch (err: unknown) {
   if (err instanceof Error) {
     console.error("Unexpected error:", err.message);

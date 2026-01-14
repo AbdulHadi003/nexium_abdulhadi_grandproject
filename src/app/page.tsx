@@ -22,7 +22,7 @@ export default function Home() {
                 </span>
               </h1>
               <p className="text-xl text-gray-600 leading-relaxed">
-                Start tracking your mood, writing journals, building habits, and receiving gentle reminders for a healthier mind.
+                Start tracking your mood, writing journals, building daily activities, and receiving gentle reminders for a healthier mind.
               </p>
             </div>
 
@@ -43,7 +43,7 @@ export default function Home() {
                 },
                 {
                   icon: 'ri-task-line',
-                  title: 'Habit Tracking',
+                  title: 'Daily Activities',
                   desc: 'Build healthy routines',
                   color: 'from-purple-400 to-purple-500',
                 },

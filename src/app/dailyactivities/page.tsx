@@ -1,10 +1,11 @@
 "use client";
-import MoodTracker from "@/components/ui/moodTracker";
+import {HabitForm }from "@/components/ui/dailyactivitiesForm";
 import NavBar from '@/components/ui/navbar';
 import useAuthGuard from '@/hooks/useAuthGuard';
 
-export default function MoodPage() {
+export default function Habits() {
   const loading = useAuthGuard();
+
   if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center">
@@ -16,9 +17,10 @@ export default function MoodPage() {
     <>
       <NavBar />
       <br/><br/><br/>
-    <main className="min-h-screen bg-gray-100">
-      <MoodTracker />
-    </main>
+      <div className="p-8">
+        <h1 className="text-2xl font-bold text-gray-800 mb-6">Habits</h1>
+        <HabitForm />
+      </div>
     </>
   );
 }

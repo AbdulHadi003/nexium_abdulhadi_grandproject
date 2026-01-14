@@ -119,7 +119,7 @@ export function HabitForm() {
         <div className="bg-white rounded-2xl shadow-lg border border-gray-100 p-8">
           <div className="flex items-center space-x-3">
             <i className="ri-loader-4-line animate-spin text-indigo-500 text-2xl w-8 h-8 flex items-center justify-center"></i>
-            <p className="text-gray-600 font-medium">Loading your habits...</p>
+            <p className="text-gray-600 font-medium">Loading your daily activities...</p>
           </div>
         </div>
       </div>
@@ -226,7 +226,7 @@ export function HabitForm() {
                 <div className="w-16 h-16 bg-gradient-to-br from-purple-500 to-pink-500 rounded-2xl flex items-center justify-center mb-4 mx-auto">
                   <i className="ri-task-line text-white text-2xl w-8 h-8 flex items-center justify-center"></i>
                 </div>
-                <h1 className="text-2xl font-bold text-gray-900 mb-2">Daily Habits Tracker</h1>
+                <h1 className="text-2xl font-bold text-gray-900 mb-2">Daily Activities Tracker</h1>
                 <p className="text-gray-600">Build consistent healthy routines for better wellness</p>
               </div>
 
@@ -236,8 +236,8 @@ export function HabitForm() {
                     <i className="ri-check-line text-white text-3xl w-10 h-10 flex items-center justify-center"></i>
                   </div>
                   <h3 className="text-xl font-bold text-green-700 mb-2">Great job!</h3>
-                  <p className="text-green-600 font-medium">You`ve already submitted your habits for today.</p>
-                  <p className="text-gray-500 text-sm mt-2">Come back tomorrow to track your progress!</p>
+                  <p className="text-green-600 font-medium">You`ve already submitted your daily activities for today.</p>
+                  <p className="text-gray-500 text-sm mt-2">Come back tomorrow to keep your progress on track!</p>
                 </div>
               ) : (
                 <div className="space-y-6">
@@ -273,7 +273,7 @@ export function HabitForm() {
                       className="bg-gradient-to-r from-purple-500 to-pink-500 text-white px-8 py-3 rounded-xl font-semibold hover:shadow-lg transform hover:scale-105 transition-all duration-200 whitespace-nowrap cursor-pointer"
                     >
                       <i className="ri-save-line mr-2 w-5 h-5 flex items-center justify-center"></i>
-                      Submit Today`s Habits
+                      Submit Today`s Activities
                     </button>
                   </div>
                 </div>
@@ -322,7 +322,7 @@ export function HabitForm() {
                     <i className="ri-lightbulb-line text-gray-500 text-xl w-6 h-6 flex items-center justify-center"></i>
                   </div>
                   <p className="text-sm text-gray-500 leading-relaxed">
-                    Select a habit entry from your history to get AI-powered insights and suggestions for improvement.
+                    Select a Activities entry from your history to get AI-powered insights and suggestions for improvement.
                   </p>
                 </div>
               )}

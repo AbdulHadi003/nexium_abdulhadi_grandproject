@@ -12,7 +12,7 @@ const navItems = [
   { label: 'Home', path: '/dashboard' },
   { label: 'Mood', path: '/mood' },
   { label: 'Journal', path: '/journal' },
-  { label: 'Habits', path: '/habits' },
+  { label: 'Daily Activities', path: '/dailyactivities' },
 ];
 
 export default function NavBar() {
@@ -41,7 +41,7 @@ export default function NavBar() {
   const userInitial = userEmail?.[0]?.toUpperCase() ?? '';
 
   return (
-    <nav className="flex items-center justify-between px-6 py-4 bg-gradient-to-br from-indigo-50 via-white to-cyan-50 shadow-sm border-b border-gray-100">
+    <nav className="fixed top-0 left-0 w-full z-50 flex items-center justify-between px-6 py-4 bg-gradient-to-br from-indigo-50 via-white to-cyan-50 shadow-sm border-b border-gray-100">
       {/* Left: Logo and Nav Links */}
       <div className="flex items-center space-x-6">
         {/* Logo */}

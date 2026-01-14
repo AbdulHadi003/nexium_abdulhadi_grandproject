@@ -4,12 +4,16 @@ import NavBar from '@/components/ui/navbar';
 import Alert from '@/components/ui/alert';
 import { useEffect, useState } from 'react';
 import { auth } from '@/lib/firebase';
+import useAuthGuard from '@/hooks/useAuthGuard';
+
 
 type Mood = { created_at: string; mood_: number };
 type Journal = { created_at: string; writing: string };
 type HabitsEntry = { created_at: string; writing: string };
 
 export default function Dashboard() {
+  const loading = useAuthGuard();
+
   const [userName, setUserName] = useState('User');
   const [today, setToday] = useState('');
   const [lastMood, setLastMood] = useState<Mood | null>(null);
@@ -20,6 +24,7 @@ export default function Dashboard() {
   const [journalStreak, setJournalStreak] = useState(0);
 
   useEffect(() => {
+    if (loading) return;
     const user = auth.currentUser;
     if (!user) return;
 
@@ -62,44 +67,36 @@ export default function Dashboard() {
       const todayHab = hData.filter((h) => h.created_at.startsWith(nowUTC));
       setTodayHabits(todayHab);
 
-      const calcUTCStreak = (entries: { created_at: string }[]) => {
-        const datesSet = new Set(entries.map((e) => e.created_at.slice(0, 10)));
-        let streak = 0;
-
-        const todayUTC = new Date().toISOString().slice(0, 10);
-        let current = new Date(todayUTC);
-
-        // Start checking from the day before today
-        current.setUTCDate(current.getUTCDate() - 1);
-        const yesterdayUTC = current.toISOString().slice(0, 10);
-
-        // If yesterday is not present, streak is 0
-        if (!datesSet.has(yesterdayUTC)) return 0;
-
-        // If yesterday exists, begin streak count from today
-        streak = 1;
-        current = new Date(todayUTC); // Reset to today
-
-        while (true) {
-          const dateStr = current.toISOString().slice(0, 10);
-          if (datesSet.has(dateStr)) {
-            streak++;
-            current.setUTCDate(current.getUTCDate() - 1);
-          } else {
-            break;
-          }
-        }
-
-        return streak;
+const fetchStreak = async (category: string) => {
+        const res = await fetch('/api/streak/check-dashboard', {
+          method: 'POST',
+          body: JSON.stringify({ uid, category }),
+        });
+        const data = await res.json();
+        return data.streak || 0;
       };
 
-      setMoodStreak(calcUTCStreak(mData));
-      setHabitStreak(calcUTCStreak(hData));
-      setJournalStreak(calcUTCStreak(jData));
+      const [mood, habit, journal] = await Promise.all([
+        fetchStreak('mood'),
+        fetchStreak('habit'),
+        fetchStreak('journal'),
+      ]);
+
+      setMoodStreak(mood);
+      setHabitStreak(habit);
+      setJournalStreak(journal);
     };
 
     fetchData();
-  }, []);
+  }, [loading]);
+  
+  if (loading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <p className="text-gray-500">Checking authentication...</p>
+      </div>
+    );
+  }
 
   const writing = todayHabits.length > 0 ? todayHabits[0].writing : '';
   const entries = writing ? writing.split(',').map((line) => line.trim()) : [];
@@ -114,6 +111,7 @@ export default function Dashboard() {
     <>
       <Alert />
       <NavBar />
+      <br/><br/><br/>
       <div className="p-6 space-y-6 bg-gradient-to-br from-indigo-50 via-white to-cyan-50">
         <h2 className="text-2xl font-bold text-gray-800">Good Morning, {userName}!</h2>
         <p className="text-gray-600">{today}</p>
@@ -130,7 +128,7 @@ export default function Dashboard() {
 
           {/* Habits Completed */}
           <Card
-            title="Habits Completed"
+            title="Daily Activities Completed"
             icon="ri-task-line"
             color="from-green-400 to-green-500"
             content={habitsContent}
@@ -153,7 +151,7 @@ export default function Dashboard() {
             content={`${moodStreak} Days Strong!`}
           />
           <Card
-            title="Habit Streak"
+            title="Daily Activities Streak"
             icon="ri-fire-line"
             color="from-orange-400 to-orange-500"
             content={`${habitStreak} Days Strong!`}

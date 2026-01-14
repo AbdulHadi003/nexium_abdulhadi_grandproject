@@ -5,7 +5,7 @@ export async function POST(req: Request) {
   const { id, writing } = await req.json();
 
   // Get current date in YYYY-MM-DD format (UTC)
-const today = new Date().toISOString().replace("T", " ").slice(0, 19);
+const today = new Date().toISOString().replace('T', ' ').slice(0, 10);
 
   // Check if journal already exists for today
   const { data: existing, error: checkError } = await supabase
@@ -30,6 +30,22 @@ const today = new Date().toISOString().replace("T", " ").slice(0, 19);
 
   if (insertError) {
     return NextResponse.json({ error: insertError.message }, { status: 500 });
+  }
+    const histRes = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/streak/update`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      uid: id,
+      category: "journal",
+    }),
+  });
+
+  if (!histRes.ok) {
+    console.error("Failed to update streak:", await histRes.text());
+  } else {    
+           const hist = await histRes.json();
+        console.log("History from API:", hist);
+
   }
 
   return NextResponse.json({ message: 'Saved' });

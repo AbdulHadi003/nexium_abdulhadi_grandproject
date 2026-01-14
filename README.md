@@ -15,7 +15,7 @@ Your can insert your moods at any moment in day by selecting the available moods
 
 ##  Journal Writing And Analysis 
 
-Your can write your daily journal,also you can track your previous writing available at the side of the screen and also you can analyze you day with the help of AI that helps you to summarize how your day was and how it effect mental health and suggestions to maintain good metal health.Also note that you can write journal once a day.
+Your can write your daily journal,also you can track your previous writing available at the side of the screen and also you can analyze your day with the help of AI that helps you to summarize how your day was and how it effect mental health and suggestions to maintain good metal health.Also note that you can write journal once a day.
 ![journal](public/images/journal.png)
 
 ## Habits Tracking
@@ -42,6 +42,6 @@ This project uses [`next/font`](https://nextjs.org/docs/app/building-your-applic
 ```
 ## Ending 
 
-It is one of the great real world project and wil more function and efficiency can be made compatible with real world.
+It is one of the great project and with more functions  and improved efficiency can be made compatible with real world.
 
 
