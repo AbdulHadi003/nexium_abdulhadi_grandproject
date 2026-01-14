@@ -38,6 +38,7 @@ export async function POST(req: Request) {
     }
 
     return NextResponse.json({ success: true });
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   } catch (err) {
     return NextResponse.json(
       { error: 'Invalid request body' },
