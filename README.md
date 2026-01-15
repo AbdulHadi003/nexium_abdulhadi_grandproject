@@ -31,11 +31,16 @@ Here you simply get an alert if on a day you did not submit your mood, write a j
 ## Database Design 
 
 # Tables with constraints
-1-mood(<u>uid:text,created_at:text</u>,mood:text)
-2-journal(<u>id:text,created_at:text</u>,writing:text)
-3-habits(<u>id:text,created_at:text</u>,writing:text)(This corresponds to Daily Activities)
-4-alert(<u>uid:text,created_at:date</u>,message:text,message_status:text)
-5-streak(<u>uid:text,category:text</u>,streak_count:int4,last_date:date)
+1-mood(<u>uid:text,created_at:text</u>,mood:text)(uid:text,created_at:text composite PK)
+<br>
+2-journal(<u>id:text,created_at:text</u>,writing:text)(id:text,created_at:text composite PK)
+<br>
+3-habits(<u>id:text,created_at:text</u>,writing:text)(This corresponds to Daily Activities)(id:text,created_at:text composite PK)
+<br>
+4-alert(<u>uid:text,created_at:date</u>,message:text,message_status:text)(uid:text,created_at:date composite PK)
+<br>
+5-streak(<u>uid:text,category:text</u>,streak_count:int4,last_date:date)(uid:text,category:text composite PK)
+
 
 ## How To Run
 
