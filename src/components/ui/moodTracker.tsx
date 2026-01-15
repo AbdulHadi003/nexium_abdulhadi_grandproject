@@ -98,18 +98,31 @@ export default function MoodTracker() {
     setHistory(Array.isArray(data) ? data : []);
   };
 
-  const handleSubmit = async () => {
-    if (!selectedMood || !uid) return;
+
+ const handleSubmit = async () => {
+  if (!selectedMood || !uid) {
+    toast.error("Please select a mood first.");
+    return;
+  }
+  try {
     const res = await fetch("/api/mood/insert", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ uid, mood_: selectedMood }),
     });
-    if (!res.ok) return toast.error("Failed to submit mood.");
-    toast.success("Mood submitted!");
-    setSelectedMood(null);
+    if (!res.ok) {
+      throw new Error("Request failed");
+    }
+    toast.success("Mood entered successfully");
+    setTimeout(() => {
+      setSelectedMood(null);
+    }, 800);
     await loadMoodHistory(uid);
-  };
+  } catch (error) {
+    toast.error("Failed to submit mood. Please try again.");
+  }
+};
+
 
   const handleAnalyze = async () => {
     if (!uid || !duration) return;
