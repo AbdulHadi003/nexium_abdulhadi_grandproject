@@ -18,15 +18,24 @@ Your can insert your moods at any moment in day by selecting the available moods
 Your can write your daily journal,also you can track your previous writing available at the side of the screen and also you can analyze your day with the help of AI that helps you to summarize how your day was and how it effect mental health and suggestions to maintain good metal health.Also note that you can write journal once a day.
 ![journal](public/images/journal.png)
 
-## Habits Tracking
+## Daily Activities Tracking
 
-Here you enter your daily habits and also keep track of previous days that either you are continuing with the habits the really have positive impact on your mental health.you select the habit that you have done in a day and can also analyze the previous habits via AI that suggest how to keep with these habit if you are consistent and also suggest some more habits to maintain good metal health.you can enter your habits once a day.
+Here you enter your daily activities and also keep track of previous days that either you are continuing with the activities the really have positive impact on your mental health.you select the activities that you have done in a day and can also analyze the previous activities via AI that suggest how to keep with these activities if you are consistent and also suggest some more activities to maintain good metal health.you can enter your activities once a day.
 ![habit](public/images/habit.png)
 
 ## Alert 
 
 Here you simply get an alert if on a day you did not submit your mood, write a journal or enter your habits so an alert message appear notifying user to enter the details.
 ![alert](public/images/alert.png)
+
+## Database Design 
+
+# Tables with constraints
+1-mood(<u>uid:text,created_at:text</u>,mood:text)
+2-journal(<u>id:text,created_at:text</u>,writing:text)
+3-habits(<u>id:text,created_at:text</u>,writing:text)(This corresponds to Daily Activities)
+4-alert(<u>uid:text,created_at:date</u>,message:text,message_status:text)
+5-streak(<u>uid:text,category:text</u>,streak_count:int4,last_date:date)
 
 ## How To Run
 
